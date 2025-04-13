@@ -1,0 +1,125 @@
+#################################
+# --- Project Configuration --- #
+#################################
+
+[project]
+name = "aws-circleci"
+version = "0.1.0"
+description = "Automated Vector Database Management with CircleCI"
+readme = "README.md"
+requires-python = ">=3.12"
+
+
+dependencies = [
+  "boto3>=1.37.24",
+  "langchain-community>=0.3.20",
+  "langchain-milvus>=0.1.8",
+  "langchain-openai>=0.3.11",
+  "pymilvus>=2.5.6",
+  "pypdf>=5.4",
+]
+
+optional-dependencies.dev = [
+  "mypy>=1.15",
+  "pre-commit>=4.2",
+  "pytest>=8.3.5",
+  "ruff>=0.11.2",
+]
+
+######################################
+# --- Build System Configuration --- #
+######################################
+
+# Build system
+
+[build-system]
+build-backend = "hatchling.build"
+
+requires = [ "hatchling" ]
+
+[tool.hatch.build.targets.wheel]
+packages = [ "src" ]
+
+######################################
+# --- Linting & Formatting Tools --- #
+######################################
+
+[tool.ruff]
+# Assume Python 3.12
+target-version = "py312"
+
+# Same as Black.
+line-length = 105
+indent-width = 4
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+]
+
+# Whether to show an enumeration of all fixed lint violations
+show-fixes = true
+
+#########################
+# --- Static Typing --- #
+#########################
+
+# Enable pycodestyle (`E`), Pyflakes (`F`), and import sorting (`I`)
+lint.select = [
+  # flake8-bugbear
+  "B",
+  # pycodestyle
+  "E",
+  # Pyflakes
+  "F",
+  # isort
+  "I",
+  # flake8-simplify
+  "SIM",
+  # pyupgrade
+  "UP",
+]
+lint.ignore = [  ]
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+lint.fixable = [ "ALL" ]
+lint.unfixable = [  ]
+
+#########################
+# --- Testing Tools --- #
+#########################
+
+# Unlike Flake8, default to a complexity level of 10.
+lint.mccabe.max-complexity = 10
+
+[tool.pytest.ini_options]
+testpaths = [ "tests" ]
+python_files = [ "test_*.py" ]
+addopts = "-ra -v -s"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning"
+]
+
+[tool.mypy]
+files = "src, aws_lambda, tests"
+ignore_missing_imports = true
