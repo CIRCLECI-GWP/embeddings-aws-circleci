@@ -20,7 +20,7 @@ if ! aws lambda get-function --function-name ${LAMBDA_FUNCTION_NAME} --region ${
         --role arn:aws:iam::${AWS_ACCOUNT_ID}:role/${ROLE_NAME} \
         --region ${AWS_REGION} \
         --timeout 900 \
-        --memory-size 3006 \
+        --memory-size 3008 \
         --environment "Variables={
             PDF_BUCKET_NAME=${PDF_BUCKET_NAME},
             OPENAI_API_KEY=${OPENAI_API_KEY},
@@ -42,7 +42,7 @@ else
     aws lambda update-function-configuration \
         --function-name ${LAMBDA_FUNCTION_NAME} \
         --timeout 900 \
-        --memory-size 3072 \
+        --memory-size 3008 \
         --environment "Variables={
             PDF_BUCKET_NAME=${PDF_BUCKET_NAME},
             OPENAI_API_KEY=${OPENAI_API_KEY},
